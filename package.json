@@ -1,0 +1,24 @@
+{
+  "name": "astrum_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lucasmpimentel/astrum_backend.git"
+  },
+  "author": "Lucas Pimentel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasmpimentel/astrum_backend/issues"
+  },
+  "homepage": "https://github.com/lucasmpimentel/astrum_backend#readme",
+  "dependencies": {
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  }
+}
