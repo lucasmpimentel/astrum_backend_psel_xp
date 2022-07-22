@@ -11,7 +11,7 @@ const Wallet = (sequelize, DataTypes) => {
     },
   );
   
-  /* Wallet.associate = (models) => {
+  Wallet.associate = (models) => {
     Wallet.belongsTo(models.User, { foreignKey: 'userId', as: 'users' });
     Wallet.hasMany(models.UserShare, {
       foreignKey: 'walletId',
@@ -29,7 +29,7 @@ const Wallet = (sequelize, DataTypes) => {
       foreignKey: 'destination',
       as: 'transactionsIncome',
     });
-  }; */
+  };
 
   return Wallet;
 };

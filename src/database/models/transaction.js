@@ -13,7 +13,7 @@ const Transaction = (sequelize, DataTypes) => {
     },
   );
 
-  /* Transaction.associate = (models) => {
+  Transaction.associate = (models) => {
     Transaction.belongsTo(models.User, { foreignKey: 'userId', as: 'users' });
     Transaction.belongsTo(models.Wallet, {
       foreignKey: 'walletId',
@@ -23,7 +23,7 @@ const Transaction = (sequelize, DataTypes) => {
       foreignKey: 'destination',
       as: 'transactionsIncome',
     });
-  }; */
+  };
 
   return Transaction;
 };

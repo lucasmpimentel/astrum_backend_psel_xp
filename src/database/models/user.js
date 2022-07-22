@@ -16,14 +16,14 @@ const User = (sequelize, DataTypes) => {
     },
   );
   
-  /* User.associate = (models) => {
+  User.associate = (models) => {
     User.hasOne(models.Wallet, { foreignKey: 'userId', as: 'wallets' });
     User.hasMany(models.UserShare, { foreignKey: 'userId', as: 'userShares' });
     User.hasMany(models.Transaction, {
       foreignKey: 'userId',
       as: 'transactions',
     });
-  } */
+  }
 
   return User;
 };

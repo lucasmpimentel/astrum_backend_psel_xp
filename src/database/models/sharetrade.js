@@ -15,12 +15,12 @@ const ShareTrade = (sequelize, DataTypes) => {
     },
   );
 
-  /* ShareTrade.associate = (models) => {
+  ShareTrade.associate = (models) => {
     ShareTrade.belongsTo(models.Wallet, {
       foreignKey: 'walletId',
       as: 'wallets',
     });
-  }; */
+  };
 
   return ShareTrade;
 };

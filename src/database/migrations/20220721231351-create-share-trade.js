@@ -11,20 +11,16 @@ module.exports = {
       walletId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        /* onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'Wallet',
+          model: 'wallets',
           key: 'id',
-        }, */
+        },
       },
       shareName: {
         type: Sequelize.STRING,
         allowNull: false,
-        /* references: {
-          model: 'UserShare',
-          key: 'shareName',
-        }, */
       },
       buyedBy: {
         type: Sequelize.DECIMAL,

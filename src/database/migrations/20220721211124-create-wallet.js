@@ -11,12 +11,12 @@ module.exports = {
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        /* onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'User',
+          model: 'users',
           key: 'id',
-        }, */
+        },
       },
       value: {
         type: Sequelize.DECIMAL,

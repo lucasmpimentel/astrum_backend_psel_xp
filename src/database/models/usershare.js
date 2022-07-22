@@ -16,16 +16,13 @@ const UserShare = (sequelize, DataTypes) => {
     },
   );
   
-  /* UserShare.associate = (models) => {
-    UserShare.belongsTo(models.User, { foreignKey: 'userId', as: 'users' });
-  };
-
   UserShare.associate = (models) => {
+    UserShare.belongsTo(models.User, { foreignKey: 'userId', as: 'users' });
     UserShare.belongsTo(models.Wallet, {
       foreignKey: 'walletId',
       as: 'wallets',
     });
-  }; */
+  };
   
   return UserShare;
 };

@@ -11,22 +11,22 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        /* onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'User',
+          model: 'users',
           key: 'id',
-        }, */
+        },
       },
       walletId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        /* onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'Wallet',
+          model: 'wallets',
           key: 'id',
-        }, */
+        },
       },
       destination: {
         type: Sequelize.INTEGER,
