@@ -40,8 +40,11 @@ routes.route('/ativos/:id')
 routes.route('/conta/deposito')
   .post(authByToken);
 
-routes.route('/conte/saque')
-  .post(authByToken);
+routes.route('/conta/saque')
+  .post(authByToken, walletControllers.withdraw);
+
+routes.route('/conta/transferencia')
+  .post(authByToken, walletControllers.transfer)
 
 routes.route('/conta/:clientId')
   .get(authByToken, walletControllers.getBalance);

@@ -3,3 +3,12 @@ export interface IWallet {
   value: number;
   userId: number;
 }
+
+export interface ITransfer {
+  userId: number;
+  walletId: number;
+  password: string;
+  destination: number;
+  value: number;
+  op: string;
+}
