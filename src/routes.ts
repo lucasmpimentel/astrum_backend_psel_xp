@@ -4,13 +4,18 @@ import authByToken from './middlewares/auth.validation';
 import usersControllers from './controllers/users.controllers';
 import shareControllers from './controllers/shares.controllers';
 import walletControllers from './controllers/wallet.controllers';
+import apiControllers from './controllers/api.controllers';
 
 const routes = express.Router();
+
+
 
 // ---------------------------- USER ---------------------------------
 
 routes.route('/login')
   .post(usersValidations.loginValidation, usersControllers.login);
+
+routes.route('/cadastro').post();
 
 routes.route('/cliente/:id')
   .get(authByToken, usersControllers.getById);
@@ -48,5 +53,16 @@ routes.route('/conta/transferencia')
 
 routes.route('/conta/:clientId')
   .get(authByToken, walletControllers.getBalance);
+
+// ---------------------------- API ----------------------------------
+
+routes.route('/api/carteira')
+  .get(authByToken, apiControllers.searchAll)
+
+routes.route('api/cotacao/cd_acao/:cod')
+  .get(authByToken, apiControllers.searchByName)
+
+routes.route('api/empresa/:id/cotacoes')
+  .get(authByToken, apiControllers.searchById)
 
 export default routes;
