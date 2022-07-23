@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import jwt, { SignOptions } from 'jsonwebtoken';
 
-interface IUserToken {
+export interface IUserToken {
   id: number;
   name: string;
   email: string;
