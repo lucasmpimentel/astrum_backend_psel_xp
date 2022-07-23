@@ -1,9 +1,11 @@
-
 const User = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
-      id: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
       name: DataTypes.STRING,
       lastname: DataTypes.STRING,
       email: DataTypes.STRING,
@@ -12,10 +14,11 @@ const User = (sequelize, DataTypes) => {
       isActive: DataTypes.BOOLEAN,
     },
     {
-      tableName: 'Users',
+      tableName: 'users',
+      freezeTableName: true,
     },
   );
-  
+
   User.associate = (models) => {
     User.hasOne(models.Wallet, { foreignKey: 'userId', as: 'wallets' });
     User.hasMany(models.UserShare, { foreignKey: 'userId', as: 'userShares' });
@@ -23,7 +26,7 @@ const User = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'transactions',
     });
-  }
+  };
 
   return User;
 };

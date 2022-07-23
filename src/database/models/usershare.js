@@ -2,7 +2,10 @@ const UserShare = (sequelize, DataTypes) => {
   const UserShare = sequelize.define(
     'UserShare',
     {
-      id: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
       userId: DataTypes.INTEGER,
       walletId: DataTypes.INTEGER,
       shareName: DataTypes.STRING,
@@ -13,6 +16,7 @@ const UserShare = (sequelize, DataTypes) => {
     {
       timestamps: false,
       tableName: 'UserShares',
+      freezeTableName: true,
     },
   );
   

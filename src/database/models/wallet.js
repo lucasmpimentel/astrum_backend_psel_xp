@@ -2,15 +2,19 @@ const Wallet = (sequelize, DataTypes) => {
   const Wallet = sequelize.define(
     'Wallet',
     {
-      id: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
       value: DataTypes.DECIMAL,
       userId: DataTypes.INTEGER,
     },
     {
-      tableName: 'Wallets',
+      tableName: 'wallets',
+      freezeTableName: true,
     },
   );
-  
+
   Wallet.associate = (models) => {
     Wallet.belongsTo(models.User, { foreignKey: 'userId', as: 'users' });
     Wallet.hasMany(models.UserShare, {
@@ -25,7 +29,7 @@ const Wallet = (sequelize, DataTypes) => {
       foreignKey: 'walletId',
       as: 'transactions',
     });
-    Wallet.belongsTo(models.Transaction, {
+    Wallet.hasMany(models.Transaction, {
       foreignKey: 'destination',
       as: 'transactionsIncome',
     });

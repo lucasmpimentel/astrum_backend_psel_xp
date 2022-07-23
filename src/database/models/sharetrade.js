@@ -2,7 +2,10 @@ const ShareTrade = (sequelize, DataTypes) => {
   const ShareTrade = sequelize.define(
     'ShareTrade',
     {
-      id: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
       walletId: DataTypes.INTEGER,
       shareName: DataTypes.STRING,
       buyedBy: DataTypes.DECIMAL,
@@ -12,6 +15,7 @@ const ShareTrade = (sequelize, DataTypes) => {
     },
     {
       tableName: 'ShareTrades',
+      freezeTableName: true,
     },
   );
 

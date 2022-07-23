@@ -2,7 +2,10 @@ const Transaction = (sequelize, DataTypes) => {
   const Transaction = sequelize.define(
     'Transaction',
     {
-      id: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
       userId: DataTypes.INTEGER,
       walletId: DataTypes.INTEGER,
       destination: DataTypes.INTEGER,
@@ -10,6 +13,7 @@ const Transaction = (sequelize, DataTypes) => {
     },
     {
       tableName: 'Transactions',
+      freezeTableName: true,
     },
   );
 
@@ -19,7 +23,7 @@ const Transaction = (sequelize, DataTypes) => {
       foreignKey: 'walletId',
       as: 'transactions',
     });
-    Transaction.hasMany(models.Wallet, {
+    Transaction.belongsTo(models.Wallet, {
       foreignKey: 'destination',
       as: 'transactionsIncome',
     });
