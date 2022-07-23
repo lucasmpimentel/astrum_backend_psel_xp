@@ -1,13 +1,5 @@
 require('dotenv').config();
 
-/* const environment = process.env.NODE_ENV || 'test';
-
-const suffix = {
-  dev: '-dev',
-  development: '-dev',
-  test: '-test',
-}; */
-
 const options = {
   host: process.env.POSTGRES_HOST || 'localhost',
   port: process.env.POSTGRES_PORT,
