@@ -15,7 +15,7 @@ const UserShare = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-      tableName: 'UserShares',
+      tableName: 'userShares',
       freezeTableName: true,
     },
   );
