@@ -5,6 +5,7 @@ const Transaction = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       userId: DataTypes.INTEGER,
       walletId: DataTypes.INTEGER,
@@ -12,7 +13,7 @@ const Transaction = (sequelize, DataTypes) => {
       value: DataTypes.DECIMAL,
     },
     {
-      tableName: 'Transactions',
+      tableName: 'transactions',
       freezeTableName: true,
     },
   );

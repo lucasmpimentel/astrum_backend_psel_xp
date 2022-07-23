@@ -30,7 +30,7 @@ module.exports = {
       },
       destination: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       value: {
         type: Sequelize.DECIMAL,
