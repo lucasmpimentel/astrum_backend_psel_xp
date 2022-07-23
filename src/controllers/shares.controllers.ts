@@ -8,6 +8,13 @@ const getClientShares = async (req: Request, res: Response) => {
   res.status(200).json(result);
 };
 
+const getSharesById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await sharesServices.getSharesById(Number(id));
+  res.status(200).json(result);
+};
+
 export default {
   getClientShares,
+  getSharesById,
 };

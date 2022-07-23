@@ -34,11 +34,11 @@ routes.route('/ativos')
   .get(authByToken);
 
 routes
-  .route('/ativos/:clientId')
+  .route('/ativos/cliente/:clientId')
   .get(authByToken, shareControllers.getClientShares);
 
 routes.route('/ativos/:id')
-  .get(authByToken);
+  .get(authByToken, shareControllers.getSharesById);
 
 // --------------------------- CONTA -------------------------------
 
