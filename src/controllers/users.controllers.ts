@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import userService from '../services/users.services'
+import userService from '../services/users.services';
 import { ILoginEntry } from '../interfaces/users.interfaces';
 
 const login = async (req: Request, res: Response) => {
@@ -10,11 +10,12 @@ const login = async (req: Request, res: Response) => {
 
 const getById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const user = await userService.getById(Number(id));
-  res.status(200).json(user);
-}
+  const { user } = req.headers as { user: string };
+  const result = await userService.getById(Number(id), user);
+  res.status(200).json(result);
+};
 
 export default {
   login,
-  getById
+  getById,
 };

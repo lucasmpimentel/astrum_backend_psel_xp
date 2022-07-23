@@ -23,7 +23,10 @@ const login = async (email: string, password: string) => {
   throw new CustomError(401, 'Email ou senha inválidos');
 };
 
-const getById = async (id: number) => {
+const getById = async (id: number, user: string) => {
+  const { id: clientId } = JSON.parse(user);
+  if (clientId !== id) throw new CustomError(401, 'Não autorizado!');
+
   const getUser = await User.findOne({
     where: { id },
     include: { model: Wallet, as: 'wallets' },
