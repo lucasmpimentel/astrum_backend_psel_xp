@@ -12,3 +12,12 @@ export interface IUserDB {
   image?: string;
   isActive: boolean;
 }
+
+export interface IUserSingUp {
+  name: string;
+  lastname: string;
+  email: string;
+  password: string;
+  image: string;
+  isActive: boolean;
+}
