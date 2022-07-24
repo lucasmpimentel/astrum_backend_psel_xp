@@ -25,7 +25,7 @@ const singUpSchema = Joi.object({
   lastname: Joi.string().min(3).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  image: Joi.string().required(),
+  image: Joi.any(),
   isActive: Joi.boolean().required(),
 }).messages({
   'any.required': 'Dados incompletos',

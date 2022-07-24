@@ -173,10 +173,44 @@ const sell = async (operation, valorAtivo, newBalance, id, buyedBy) => {
   }
 };
 
+const singUp = async (user, hashPass) => {
+  try {
+    const result = sequelize.transaction(async (transaction) => {
+      const { id } = await UserShare.create({
+        name: user.name,
+        lastname: user.email,
+        email: user.email,
+        password: hashPass,
+        image: user.image,
+        isActive: user.isActive,
+      }, {transaction});
+      console.log(id)
+      const {id: walletId} = await Wallet.create({
+        userId: id,
+        value: 0.00
+      }, {transaction});
+      await UserShare.create({
+        userId: id,
+        walletId,
+        shareName: 'INIT',
+        amount: 0,
+        buyedBy: 0,
+        totalValue: 0
+      })
+      return id
+    });
+    return result
+  } catch (err) {
+    throw new Error(err.message);
+  }
+
+}
+
 module.exports = {
   deposit,
   withdraw,
   transfer,
   buy,
   sell,
+  singUp,
 };

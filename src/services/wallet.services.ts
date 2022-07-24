@@ -1,5 +1,6 @@
-import { ITransfer } from '../interfaces/wallet.interfaces';
+import { IDepositOrder, ITransfer } from '../interfaces/wallet.interfaces';
 import CustomError from '../utils/CustomError';
+import slipMaker from '../utils/slipMaker';
 
 const sequelizeTransactions = require('../utils/sequelize.transactions');
 const { Wallet, User } = require('../database/models');
@@ -25,6 +26,21 @@ const transfers = async (operation: ITransfer, user: string) => {
     where: { id },
     include: { model: Wallet, as: 'wallets' },
   });
+
+  if (operation.op === 'deposit') {
+    const newBalance = (
+      Number(getUser.wallets.value) + Number(operation.value)
+    ).toFixed(2);
+    return {
+      name: getUser.name,
+      lastname: getUser.lastname,
+      email: getUser.email,
+      walletId: getUser.wallets.id,
+      operation: operation.op,
+      value: operation.value,
+      newBalance,
+    };
+  }
 
   if (getUser.password === operation.password) {
     try {
@@ -60,14 +76,18 @@ const transfers = async (operation: ITransfer, user: string) => {
     } catch (err: any) {
       throw new CustomError(500, err.message);
     }
-    if (operation.op === 'deposit') {
-    }
   }
 
   throw new CustomError(401, 'Não Autorizado');
 };
 
+const makepdf = (/* pdfOperation: string */) => {
+ /*  const operation: IDepositOrder = JSON.parse(pdfOperation); */
+  const result = slipMaker.makepdf(/* operation */)
+};
+
 export default {
   getBalance,
   transfers,
+  makepdf,
 };

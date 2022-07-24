@@ -1,15 +1,23 @@
+import bcrypt from 'bcryptjs';
 import tokenUtils from '../utils/token.utils';
 import CustomError from '../utils/CustomError';
 import { IUserSingUp } from '../interfaces/users.interfaces';
 
 const { User, Wallet } = require('../database/models');
+const sequelizeTransactions = require('../utils/sequelize.transactions')
+
+const SALT = 10;
 
 const login = async (email: string, password: string) => {
   const getUser = await User.findOne({ where: { email } });
 
   if (!getUser) throw new CustomError(401, 'Usuário inexistente');
 
-  if (getUser.email === email && getUser.password === password) {
+  const matchPass = bcrypt.compareSync(
+    password,
+    getUser.password);
+  
+  if (getUser.email === email && matchPass) {
     const token = tokenUtils.create(
       getUser.id,
       getUser.name,
@@ -49,16 +57,19 @@ const getById = async (id: number, user: string) => {
 };
 
 const singUp = async (user: IUserSingUp) => {
-  const result = await User.create({
-    name: user.name,
-    lastname: user.email,
-    email: user.email,
-    password: user.password,
-    image: user.image,
-    isActive: user.isActive,
-  })
-  return result;
-}
+  const searchDB = await User.findOne({ where: { email: user.email } });
+  if (searchDB || searchDB?.length > 0)
+    throw new CustomError(409, 'Usuário ja cadastrado');
+  
+  const hashPass = bcrypt.hashSync(user.password, SALT)
+
+  try {
+    await sequelizeTransactions.singUp(user, hashPass)
+  } catch (err: any) {
+    throw new CustomError(500, err.message)
+  }
+  throw new CustomError(500, 'Erro ao cadastrar');
+};
 
 export default {
   login,

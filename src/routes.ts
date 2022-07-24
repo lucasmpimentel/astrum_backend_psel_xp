@@ -46,7 +46,11 @@ routes.route('/ativos/:id')
 // --------------------------- CONTA -------------------------------
 
 routes.route('/conta/deposito')
-  .post(authByToken, walletValidation);
+  .post(authByToken, walletValidation, walletControllers.deposit)
+  .get(walletControllers.pdf);
+
+routes.route('/conta/gerarBoleto')
+  .get(walletControllers.makepdf)
 
 routes.route('/conta/saque')
   .post(authByToken, walletValidation, walletControllers.withdraw);
@@ -55,7 +59,7 @@ routes.route('/conta/transferencia')
   .post(authByToken, walletValidation, walletControllers.transfer)
 
 routes.route('/conta/:clientId')
-  .get(authByToken, walletValidation, walletControllers.getBalance);
+  .get(authByToken, walletControllers.getBalance);
 
 // ---------------------------- API ----------------------------------
 

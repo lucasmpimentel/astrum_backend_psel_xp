@@ -12,3 +12,13 @@ export interface ITransfer {
   value: number;
   op: string;
 }
+
+export interface IDepositOrder {
+  name: string;
+  lastname: string;
+  email: string;
+  walletId: number;
+  operation: string;
+  value: number;
+  newBalance: number;
+}
