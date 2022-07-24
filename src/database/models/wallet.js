@@ -5,6 +5,7 @@ const Wallet = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       value: DataTypes.DECIMAL,
       userId: DataTypes.INTEGER,

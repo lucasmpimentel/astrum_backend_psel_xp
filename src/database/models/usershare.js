@@ -5,6 +5,7 @@ const UserShare = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       userId: DataTypes.INTEGER,
       walletId: DataTypes.INTEGER,
@@ -19,7 +20,7 @@ const UserShare = (sequelize, DataTypes) => {
       freezeTableName: true,
     },
   );
-  
+
   UserShare.associate = (models) => {
     UserShare.belongsTo(models.User, { foreignKey: 'userId', as: 'users' });
     UserShare.belongsTo(models.Wallet, {
@@ -27,7 +28,7 @@ const UserShare = (sequelize, DataTypes) => {
       as: 'wallets',
     });
   };
-  
+
   return UserShare;
 };
 

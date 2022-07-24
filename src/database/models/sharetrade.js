@@ -5,6 +5,7 @@ const ShareTrade = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       walletId: DataTypes.INTEGER,
       shareName: DataTypes.STRING,
@@ -14,7 +15,7 @@ const ShareTrade = (sequelize, DataTypes) => {
       totalValue: DataTypes.DECIMAL,
     },
     {
-      tableName: 'ShareTrades',
+      tableName: 'shareTrades',
       freezeTableName: true,
     },
   );

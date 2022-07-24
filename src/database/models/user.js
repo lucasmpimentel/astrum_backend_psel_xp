@@ -5,6 +5,7 @@ const User = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
       name: DataTypes.STRING,
       lastname: DataTypes.STRING,

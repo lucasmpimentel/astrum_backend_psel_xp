@@ -25,7 +25,7 @@ module.exports = {
           userId: 3,
           walletId: 3,
           destination: 3,
-          value: 11000.00,
+          value: 11000.0,
           createdAt: Sequelize.literal('CURRENT_TIMESTAMP'),
           updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
