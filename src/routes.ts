@@ -56,13 +56,10 @@ routes.route('/conta/:clientId')
 
 // ---------------------------- API ----------------------------------
 
-routes.route('/api/carteira')
+routes.route('/api/empresa')
   .get(authByToken, apiControllers.searchAll)
 
-routes.route('api/cotacao/cd_acao/:cod')
+routes.route('/api/cotacao/cd_acao/:cod')
   .get(authByToken, apiControllers.searchByName)
-
-routes.route('api/empresa/:id/cotacoes')
-  .get(authByToken, apiControllers.searchById)
 
 export default routes;

@@ -10,7 +10,7 @@ const instance = axios.create({
 
 const searchAll = async (_req: Request, res: Response) => {
   const result = await instance
-    .get('/api/carteira')
+    .get('/api/empresa')
     .then((resp) => resp.data)
     .catch((err) => err.message);
   res.status(200).send(result);
@@ -25,17 +25,7 @@ const searchByName = async (req: Request, res: Response) => {
   res.status(200).send(result);
 };
 
-const searchById = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await instance
-    .get(`/api/empresa/${id}/cotacoes`)
-    .then((resp) => resp.data)
-    .catch((err) => err.message);
-  res.status(200).send(result);
-};
-
 export default {
   searchAll,
   searchByName,
-  searchById,
 };
