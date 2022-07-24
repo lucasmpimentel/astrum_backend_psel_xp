@@ -15,7 +15,14 @@ const getById = async (req: Request, res: Response) => {
   res.status(200).json(result);
 };
 
+const singUp = async (req: Request, res: Response) => {
+  const user = req.body;
+  const result = await userService.singUp(user);
+  res.status(201).json({message: 'Cliente cadastrado com sucesso'})
+}
+
 export default {
   login,
   getById,
+  singUp
 };

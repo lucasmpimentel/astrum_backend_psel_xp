@@ -1,9 +1,12 @@
 import express from 'express';
 import usersValidations from './middlewares/users.validations';
 import authByToken from './middlewares/auth.validation';
+import walletValidation from './middlewares/wallet.validations';
+import investValidation from './middlewares/invest.validation';
 import usersControllers from './controllers/users.controllers';
 import shareControllers from './controllers/shares.controllers';
 import walletControllers from './controllers/wallet.controllers';
+import investControllers from './controllers/invest.controllers';
 import apiControllers from './controllers/api.controllers';
 
 const routes = express.Router();
@@ -15,26 +18,26 @@ const routes = express.Router();
 routes.route('/login')
   .post(usersValidations.loginValidation, usersControllers.login);
 
-routes.route('/cadastro').post();
+routes.route('/cadastro')
+  .post(usersValidations.singUpValidation, usersControllers.singUp);
 
 routes.route('/cliente/:id')
   .get(authByToken, usersControllers.getById);
 
 // ------------------------ INVESTIMENTO ----------------------------
 
-routes.route('/investimento/comprar')
-  .post(authByToken);
+routes.route('/investimentos/comprar')
+  .post(authByToken, investValidation, investControllers.buy);
 
-routes.route('/investimento/vender')
-  .post(authByToken);
+routes.route('/investimentos/vender')
+  .post(authByToken, investValidation, investControllers.sell);
 
 // --------------------------- ATIVOS -------------------------------
 
 routes.route('/ativos')
   .get(authByToken, apiControllers.searchAll);
 
-routes
-  .route('/ativos/cliente/:clientId')
+routes.route('/ativos/cliente/:clientId')
   .get(authByToken, shareControllers.getClientShares);
 
 routes.route('/ativos/:id')
@@ -43,16 +46,16 @@ routes.route('/ativos/:id')
 // --------------------------- CONTA -------------------------------
 
 routes.route('/conta/deposito')
-  .post(authByToken);
+  .post(authByToken, walletValidation);
 
 routes.route('/conta/saque')
-  .post(authByToken, walletControllers.withdraw);
+  .post(authByToken, walletValidation, walletControllers.withdraw);
 
 routes.route('/conta/transferencia')
-  .post(authByToken, walletControllers.transfer)
+  .post(authByToken, walletValidation, walletControllers.transfer)
 
 routes.route('/conta/:clientId')
-  .get(authByToken, walletControllers.getBalance);
+  .get(authByToken, walletValidation, walletControllers.getBalance);
 
 // ---------------------------- API ----------------------------------
 

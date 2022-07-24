@@ -1,8 +1,8 @@
 import tokenUtils from '../utils/token.utils';
 import CustomError from '../utils/CustomError';
-import { IUserDB } from '../interfaces/users.interfaces';
+import { IUserSingUp } from '../interfaces/users.interfaces';
 
-const { User, Wallet, userShares } = require('../database/models');
+const { User, Wallet } = require('../database/models');
 
 const login = async (email: string, password: string) => {
   const getUser = await User.findOne({ where: { email } });
@@ -48,7 +48,20 @@ const getById = async (id: number, user: string) => {
   return client;
 };
 
+const singUp = async (user: IUserSingUp) => {
+  const result = await User.create({
+    name: user.name,
+    lastname: user.email,
+    email: user.email,
+    password: user.password,
+    image: user.image,
+    isActive: user.isActive,
+  })
+  return result;
+}
+
 export default {
   login,
   getById,
+  singUp,
 };
