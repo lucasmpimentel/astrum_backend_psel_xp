@@ -26,7 +26,11 @@ const create = (
   image: string,
   isActive: boolean,
 ): string =>
-  jwt.sign({ data: { id, name, email, image, isActive } }, secret, jwtConfig as SignOptions);
+  jwt.sign(
+    { data: { id, name, email, image, isActive } },
+    secret,
+    jwtConfig as SignOptions,
+  );
 
 const verify = async (token: string) =>
   (await jwt.verify(token, secret)) as { data: IUserToken };

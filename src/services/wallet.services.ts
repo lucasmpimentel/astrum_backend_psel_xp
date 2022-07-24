@@ -20,12 +20,12 @@ const getBalance = async (clientId: number, user: string) => {
 const transfers = async (operation: ITransfer, user: string) => {
   const { id } = JSON.parse(user);
   if (id !== operation.userId) throw new CustomError(401, 'Não autorizado');
-  console.log('1');
+
   const getUser = await User.findOne({
     where: { id },
     include: { model: Wallet, as: 'wallets' },
   });
-  console.log('2');
+
   if (getUser.password === operation.password) {
     try {
       const newBalance = (
