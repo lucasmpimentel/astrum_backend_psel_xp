@@ -1,33 +1,41 @@
 const Sequelize = require('sequelize');
 const config = require('../database/config/config');
 const CustomError = require('./CustomError');
-const { Wallet, Transaction } = require('../database/models');
+const {
+  Wallet,
+  Transaction,
+  UserShare,
+  ShareTrade,
+} = require('../database/models');
+
+const sequelize = new Sequelize(config.development);
+
+const deposit = async () => {};
 
 const withdraw = async (newBalance, getUser, operation) => {
-  const sequelize = new Sequelize(config.development);
   const { wallets, id } = getUser;
   const { value } = wallets;
 
   try {
     const result = await sequelize.transaction(async (transaction) => {
-      const newTransaction = Transaction.create(
+      const newTransaction = await Transaction.create(
         {
           userId: id,
           walletId: wallets.id,
           destination: null,
-          value: operation.value,
+          value: Number(operation.value).toFixed(2),
         },
         { transaction },
       );
       await Wallet.update(
-        { value: Number(newBalance) },
+        { value: Number(newBalance).toFixed(2) },
         { where: { value }, transaction },
       );
-      return newTransaction
+      return newTransaction;
     });
     return result;
   } catch (err) {
-    throw new CustomError(500, 'Falha na gravação de dados');
+    throw new Error('Falha na gravação de dados');
   }
 };
 
@@ -37,38 +45,138 @@ const transfer = async (
   operation,
   newBalanceDestination,
 ) => {
-  const sequelize = new Sequelize(config.development);
   const { wallets, id } = getUser;
   const { value } = wallets;
 
   try {
     const result = await sequelize.transaction(async (transaction) => {
-      const newTransaction = Transaction.create(
+      const newTransaction = await Transaction.create(
         {
           userId: id,
           walletId: wallets.id,
           destination: operation.destination,
-          value: operation.value,
+          value: operation.value.toFixed(2),
         },
         { transaction },
       );
       await Wallet.update(
-        { value: Number(newBalance) },
+        { value: Number(newBalance).toFixed(2) },
         { where: { value, userId: id }, transaction },
       );
       await Wallet.update(
-        { value: Number(newBalanceDestination) },
+        { value: Number(newBalanceDestination).toFixed(2) },
         { where: { id: operation.destination }, transaction },
       );
-      return newTransaction
+      return newTransaction;
     });
-    return result
+    return result;
   } catch (err) {
-    throw new CustomError(500, 'Falha na gravação de dados');
+    throw new Error('Falha na gravação de dados');
+  }
+};
+
+const buy = async (operation, valorAtivo, newBalance, id) => {
+  const { walletId, codAtivo, qtdeAtivo } = operation;
+
+  try {
+    const result = await sequelize.transaction(async (transaction) => {
+      const newShareTransaction = await ShareTrade.create(
+        {
+          walletId,
+          shareName: codAtivo,
+          buyedBy: Number(valorAtivo).toFixed(2),
+          selledBy: null,
+          amount: qtdeAtivo,
+          totalValue: (Number(valorAtivo) * Number(qtdeAtivo)).toFixed(2),
+        },
+        { transaction },
+      );
+      await Wallet.update(
+        { value: Number(newBalance).toFixed(2) },
+        { where: { id: walletId }, transaction },
+      );
+      const checkShares = await UserShare.findOne({
+        where: { shareName: codAtivo },
+      });
+      if (checkShares) {
+        await UserShare.update(
+          {
+            amount: Number(checkShares.amount) + Number(qtdeAtivo),
+            buyedBy: Number(valorAtivo).toFixed(2),
+            totalValue: (
+              (Number(checkShares.amount) + Number(qtdeAtivo)) *
+              Number(valorAtivo)
+            ).toFixed(2),
+          },
+          { where: { walletId }, transaction },
+        );
+      } else {
+        await UserShare.create(
+          {
+            userId: id,
+            walletId,
+            shareName: codAtivo,
+            amount: qtdeAtivo,
+            buyedBy: Number(valorAtivo).toFixed(2),
+            totalValue: (Number(valorAtivo) * Number(qtdeAtivo)).toFixed(2),
+          },
+          { transaction },
+        );
+      }
+      return newShareTransaction;
+    });
+    return result;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+const sell = async (operation, valorAtivo, newBalance, id, buyedBy) => {
+  const { walletId, codAtivo, qtdeAtivo } = operation;
+
+  try {
+    const result = await sequelize.transaction(async (transaction) => {
+      const newShareTransaction = await ShareTrade.create(
+        {
+          walletId,
+          shareName: codAtivo,
+          buyedBy,
+          selledBy: Number(valorAtivo).toFixed(2),
+          amount: qtdeAtivo,
+          totalValue: (Number(valorAtivo) * Number(qtdeAtivo)).toFixed(2),
+        },
+        { transaction },
+      );
+      await Wallet.update(
+        { value: Number(newBalance).toFixed(2) },
+        { where: { id: walletId }, transaction },
+      );
+      const checkShares = await UserShare.findOne({
+        where: { shareName: codAtivo },
+      });
+      await UserShare.update(
+        {
+          amount: Number(checkShares.amount) - Number(qtdeAtivo),
+          buyedBy,
+          totalValue: (
+            (Number(checkShares.amount) - Number(qtdeAtivo)) *
+            Number(valorAtivo)
+          ).toFixed(2),
+        },
+        { where: { walletId }, transaction },
+      );
+      return newShareTransaction;
+    });
+    return result;
+  } catch (err) {
+    throw new Error(err.message);
   }
 };
 
 module.exports = {
+  deposit,
   withdraw,
   transfer,
+  buy,
+  sell,
 };
