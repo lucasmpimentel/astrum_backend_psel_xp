@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  astrum_db:
+    container_name: astrumDB
+    image: postgres
+    working_dir: /app
+    environment:
+      POSTGRES_PASSWORD: 20sKy_AsTrUm-XP22
+    restart: always
+    ports:
+      - 15432:5432
+    volumes:
+      - ./postgres:/app
+    networks:
+      - astrum_network
+  
+  astrum_pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@astrum.com.br
+      PGADMIN_DEFAULT_PASSWORD: 2022Astrum_XP
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - astrum_db
+    networks:
+      - astrum_network
+
+networks:
+  astrum_network:
+    driver: bridge
