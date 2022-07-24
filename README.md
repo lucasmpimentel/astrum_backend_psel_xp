@@ -28,6 +28,7 @@ Para padronização de código foi utilizado ESLint somado ao Prettier, entre ou
 - E popular o banco de dados com o comando `npx sequelize db:seed:all`
 - Como plus para o gerenciamento do banco de dados o docker compose possui o _pgAdmin_ que pode ser acessado através da porta 8080
 - Para iniciar o servidor basta executar `npm start` ou `npm run debug`
+- Os acessos do banco de dados estão dentro do arquivo `docker-compose.yml`
 
 As requisições podem ser feitas nas seguinte rotas:
 - Requisições GET
@@ -47,6 +48,9 @@ As requisições podem ser feitas nas seguinte rotas:
 > - `/conta/deposito` _Responsável por gerar meios de depósito na conta_ (Em Construção)
 > - `/conta/saque` _Disponibiliza Saques para o usuário_
 > - `/conta/transferencia`_Disponibiliza a possibilidade de transferencia entre contas_
+
+> - Também é possível conferir toda a documentação dos endpoints no postman
+> - https://documenter.getpostman.com/view/20776481/UzXKXeWU
 
 ## Banco de dados
 
