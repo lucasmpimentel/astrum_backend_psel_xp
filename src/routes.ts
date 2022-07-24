@@ -31,7 +31,7 @@ routes.route('/investimento/vender')
 // --------------------------- ATIVOS -------------------------------
 
 routes.route('/ativos')
-  .get(authByToken);
+  .get(authByToken, apiControllers.searchAll);
 
 routes
   .route('/ativos/cliente/:clientId')
