@@ -1,27 +1,14 @@
 import { Request, Response } from 'express';
-import axios from 'axios';
-
-const baseUrl = 'https://api-cotacao-b3.labdo.it';
-
-const instance = axios.create({
-  baseURL: baseUrl,
-  timeout: 20000,
-});
+import apiServices from '../services/api.services';
 
 const searchAll = async (_req: Request, res: Response) => {
-  const result = await instance
-    .get('/api/empresa')
-    .then((resp) => resp.data)
-    .catch((err) => err.message);
+  const result = await apiServices.searchAll();
   res.status(200).send(result);
 };
 
 const searchByName = async (req: Request, res: Response) => {
   const { cod } = req.params;
-  const result = await instance
-    .get(`/api/cotacao/cd_acao/${cod}`)
-    .then((resp) => resp.data)
-    .catch((err) => err.message);
+  const result = await apiServices.searchByName(cod);
   res.status(200).send(result);
 };
 
