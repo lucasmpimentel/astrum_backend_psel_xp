@@ -17,7 +17,7 @@ Para construir essa aplicação foram utilizadas as seguinte tecnologias:
 - PostgresDB
 - Docker
 
-Para padronização de código foi utilizado ESLint somado ao Prettier entre outras bibliotecas.
+Para padronização de código foi utilizado ESLint somado ao Prettier, entre outras bibliotecas que também somaram ao longo da aplcação.
 
 ## Como fazer para rodar a aplicação:
 
